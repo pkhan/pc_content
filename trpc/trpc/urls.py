@@ -5,6 +5,9 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', 'contentmgr.views.home'),
+    url(r'^view/(?P<content_id>\d+)/$', 'contentmgr.views.detail'),
+    url(r'^edit/(?P<content_id>\d+)/$', 'contentmgr.views.edit')
     # Examples:
     # url(r'^$', 'trpc.views.home', name='home'),
     # url(r'^trpc/', include('trpc.foo.urls')),
