@@ -1,5 +1,7 @@
 # Django settings for trpc project.
+import os
 
+environ = os.environ
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -78,7 +80,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '^-w%9(rfe_zkk-6&amp;(d%(ye1zu$l#ki)1m3gfk#7e_dv%bu73-&amp;'
+SECRET_KEY = environ['DJ_SECRET_KEY']
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
