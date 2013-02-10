@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' href='{{ STATIC_URL }}index.css' type='text/css' />
+<title>Django First Page</title>
+</head>
+
+<body>
+Hello World War 3
+
+{% if content_list %}
+    {% for content in content_list %}
+        <div class='content simple_border'>
+        <span class='title'> 
+            <a href='{% url detail content.id %}'>
+            {{ content.title }} 
+            </a>
+            </span>
+        <span class='content_body'>
+        {{ content.get_html|safe }}
+        </span>
+        </div>
+    {% endfor %}
+{% else %}
+    <span>No content at this time</span>
+{% endif %}
+</body>
+</html>
