@@ -1,28 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel='stylesheet' href='{{ STATIC_URL }}index.css' type='text/css' />
-<title>Django First Page</title>
+<title>TRPC</title>
+<link rel='stylesheet' href='{{ STATIC_URL }}css/trpc.css' type='text/css' />
 </head>
-
 <body>
-Hello World War 3
 
-{% if content_list %}
-    {% for content in content_list %}
-        <div class='content simple_border'>
+<div id='header' class='container'>
+<span id='logo'>
+<a href='{% url home "" %}'>
+<strong>T</strong>HE<strong>R</strong>EAL<strong>P</strong>AT<strong>C</strong>ONWAY</span>
+</a>
+<div id='navigation'>
+    <ul class='nav'>
+    <li><a href='{% url home "blog" %}'>BLOG </a></li>
+    <li><a href='{% url home "portfolio" %}'>PORTFOLIO</a></li>
+    </ul>
+</div>
+</div>
+<div id='body' class='container'>
+<div id='side_bar' class='whiteborder'>
+<span class='side_heading'>Saved for Posterity</span>
+<ul id='posterity'>
+<li><a href=''>My first time on a horse</a></li>
+<li><a href=''>My second time on a horse</a></li>
+</ul>
+<span class='side_heading'>Frequent Tags</span>
+<ul id='tags'>
+    <li><a href=''>administrivia</a></li>
+    <li><a href=''>chicken</a></li>
+    <li><a href=''>django</a></li>
+    <li><a href=''>personal</a></li>
+</ul>
+</div>
+<div id='main_body'>
+<div id='intro'>
+    {% if intro %}
+        <div class='content'>
         <span class='title'> 
-            <a href='{% url detail content.id %}'>
-            {{ content.title }} 
-            </a>
-            </span>
+        {{ intro.title }} 
+        </span>
         <span class='content_body'>
-        {{ content.get_html|safe }}
+            {{ intro.get_html|safe }}
         </span>
         </div>
-    {% endfor %}
-{% else %}
-    <span>No content at this time</span>
-{% endif %}
+    {% endif %}
+</div>
+<hr>
+<div id='entries'>
+    {% if entries %}
+        {% for entry in entries %}
+            <div class='content'>
+            <span class='title'>
+            <a href='{% url detail entry.main_cat entry.id %}'>
+            {{ entry.title }} 
+            </a></span>
+            <span class='content_body'>
+                {{ entry.get_html|safe }}
+            </span>
+            <span class='closer'>
+                Published {{ entry.pub_date }} by {{ entry.author.name }} to <strong> {{ entry.main_cat }} </strong>
+            </span>
+            </div>
+        {% endfor %}
+    {% else %}
+        <span>No content at this time</span>
+    {% endif %}
+</div>
+</div>
+
+
+</div>
+
 </body>
 </html>
+
