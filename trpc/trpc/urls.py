@@ -7,10 +7,12 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     url(r'^$', 'contentmgr.views.home', { 'category' : '' }),
     url(r'^view/(?P<content_id>\d+)/?$', 'contentmgr.views.detail', { 'category' : '' }),
-    url(r'^edit/(?P<content_id>\d+)/?$', 'contentmgr.views.detail', { 'category' : '' }),
+    url(r'^create/?(?P<intro>\w+)?/?$', 'contentmgr.views.create', { 'category' : ''}),
+    url(r'^edit/(?P<content_id>\d+)/?$', 'contentmgr.views.edit', { 'category' : '' }),
     url(r'^(?P<category>\w*)/?$', 'contentmgr.views.home', name='home'),
-    url(r'^(?P<category>\w*)/view/(?P<content_id>\d+)/?$', 'contentmgr.views.detail', name='detail'),
-    url(r'^(?P<category>\w*)/edit/(?P<content_id>\d+)/$', 'contentmgr.views.edit', name='edit')
+    url(r'^(?P<category>\w*)/?view/(?P<content_id>\d+)/?$', 'contentmgr.views.detail', name='detail'),
+    url(r'^(?P<category>\w*)/?create/?(?P<intro>\w+)?/?$', 'contentmgr.views.create', name='create'),
+    url(r'^(?P<category>\w*)/?edit/(?P<content_id>\d+)/?$', 'contentmgr.views.edit', name='edit')
     # Examples:
     # url(r'^$', 'trpc.views.home', name='home'),
     # url(r'^trpc/', include('trpc.foo.urls')),

@@ -5,8 +5,8 @@ from markdown import markdown
 class Content(models.Model):
     title = models.CharField(max_length=200, default="")
     author = models.ForeignKey('User')
-    pub_date = models.DateField(null=True, blank=True)
-    mod_date = models.DateField(auto_now=True)
+    pub_date = models.DateTimeField(null=True, blank=True)
+    mod_date = models.DateTimeField(auto_now=True)
     draft = models.BooleanField(default=True)
     main_cat = models.CharField(max_length=50, default="")
     body = models.TextField(default="")

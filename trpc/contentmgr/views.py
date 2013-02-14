@@ -1,7 +1,8 @@
-from contentmgr.models import Content, CatIntro, Entry
+from contentmgr.models import Content, CatIntro, Entry, User
 from django.template import loader, Context, RequestContext
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.utils import timezone
+from django.shortcuts import redirect
 
 def home(request, category):
     intro = None
@@ -18,7 +19,33 @@ def home(request, category):
     return HttpResponse(output)
 
 def detail(request, category, content_id):
-    return HttpResponse("HI")
+    try:
+        e = Entry.objects.filter(main_cat=category).get(pk=content_id)
+    except Entry.DoesNotExist:
+        raise Http404
+    return HttpResponse(e.get_html())
 
 def edit(request, category, content_id):
     return HttpResponse("EDIT")
+
+def create(request, category, intro=False):
+    print(category)
+    print(intro)
+    if intro:
+        try:
+            e = CatIntro.objects.filter(main_cat=category)[0:1].get()
+            print("model is catintro")
+        except CatIntro.DoesNotExist:
+            e = CatIntro()
+    else:
+        e = Entry()
+
+    e.author = User.objects.all()[0]
+    e.main_cat = category
+    #e.save()
+    
+    return HttpResponse("CREATE")
+    return redirect('edit', category=category, content_id=e.id)
+
+def update(request, content_id):
+    pass
