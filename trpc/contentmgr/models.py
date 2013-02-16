@@ -8,9 +8,9 @@ class Content(models.Model):
     pub_date = models.DateTimeField(null=True, blank=True)
     mod_date = models.DateTimeField(auto_now=True)
     draft = models.BooleanField(default=True)
-    main_cat = models.CharField(max_length=50, default="")
+    main_cat = models.CharField(max_length=50, default="", blank=True)
     body = models.TextField(default="")
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag', blank=True)
 
     def publish(self):
         self.draft = False

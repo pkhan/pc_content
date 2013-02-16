@@ -1,4 +1,5 @@
 from contentmgr.models import Content, CatIntro, Entry, User
+from contentmgr.forms import ContentForm
 from django.template import loader, Context, RequestContext
 from django.http import HttpResponse, Http404
 from django.utils import timezone
@@ -10,7 +11,7 @@ def home(request, category):
     if len(intros) > 0:
         intro = intros[0]
     entries = Entry.objects.all().order_by('-pub_date').filter(pub_date__lte=timezone.now()).filter(draft=False)
-    if category != '':
+    if category != 'home':
         entries = entries.filter(main_cat=category)
     c = RequestContext(request, { 'entries' : entries,
         'intro' : intro } )
@@ -18,23 +19,28 @@ def home(request, category):
     output = t.render(c)
     return HttpResponse(output)
 
-def detail(request, category, content_id):
+def detail(request, content_id, category):
     try:
-        e = Entry.objects.filter(main_cat=category).get(pk=content_id)
+        e = Content.objects.filter(main_cat=category).get(pk=content_id)
     except Entry.DoesNotExist:
         raise Http404
     return HttpResponse(e.get_html())
 
 def edit(request, category, content_id):
-    return HttpResponse("EDIT")
+    t = loader.get_template('edit.html')
+    try:
+        content = Content.objects.get(pk = content_id)
+    except Content.DoesNotExist:
+        raise Http404
+    form = ContentForm(instance = content)
+
+    c = RequestContext(request,{ 'form' : form, 'content' : content } )
+    return HttpResponse(t.render(c))
 
 def create(request, category, intro=False):
-    print(category)
-    print(intro)
     if intro:
         try:
             e = CatIntro.objects.filter(main_cat=category)[0:1].get()
-            print("model is catintro")
         except CatIntro.DoesNotExist:
             e = CatIntro()
     else:
@@ -42,10 +48,23 @@ def create(request, category, intro=False):
 
     e.author = User.objects.all()[0]
     e.main_cat = category
-    #e.save()
+    e.save()
     
-    return HttpResponse("CREATE")
     return redirect('edit', category=category, content_id=e.id)
 
 def update(request, content_id):
-    pass
+    content = Content.objects.get(pk=content_id)
+    if request.method == 'POST':
+        form = ContentForm(request.POST, instance=content)
+    else:
+        raise Http404
+
+    content = form.save(commit=False)
+
+    if 'button' in request.POST:
+        if request.POST['button'] == 'Publish':
+            content.publish()
+        content.save()
+        return redirect('detail', category=content.main_cat, content_id=content.id)
+
+    return HttpResponse('OK')

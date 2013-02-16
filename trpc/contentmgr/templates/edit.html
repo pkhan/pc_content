@@ -3,9 +3,13 @@
 <head>
 <title>TRPC</title>
 <link rel='stylesheet' href='{{ STATIC_URL }}css/trpc.css' type='text/css' />
+<link rel='stylesheet' href='{{ STATIC_URL }}css/edit.css' type='text/css' />
+
 </head>
 <body>
-<a href='{% url create category="" %}'>Click Me?</a>
+<script src='{{ STATIC_URL }}js/jquery.min.js' type='text/javascript'> </script>
+<script src='{{ STATIC_URL }}js/Markdown.Converter.js' type='text/javascript'> </script>
+<script src='{{ STATIC_URL }}js/edit.js' type='text/javascript'> </script>
 <div id='header' class='container'>
 <span id='logo'>
 <a href='{% url home "" %}'>
@@ -19,57 +23,31 @@
 </div>
 </div>
 <div id='body' class='container'>
-<div id='side_bar' class='whiteborder'>
-<span class='side_heading'>Saved for Posterity</span>
-<ul id='posterity'>
-<li><a href=''>My first time on a horse</a></li>
-<li><a href=''>My second time on a horse</a></li>
-</ul>
-<span class='side_heading'>Frequent Tags</span>
-<ul id='tags'>
-    <li><a href=''>administrivia</a></li>
-    <li><a href=''>chicken</a></li>
-    <li><a href=''>django</a></li>
-    <li><a href=''>personal</a></li>
-</ul>
-</div>
-<div id='main_body'>
-<div id='intro'>
-    {% if intro %}
+    <div id='form' class='editpane'>
+    <form id='content_form' action='{% url update content.id %}' method='POST'>
+    {% csrf_token %}
+    <p> {{form.title.label_tag}} {{ form.title }} </p>
+    <p> {{form.body.label_tag}} {{ form.body }} </p>
+    <p> {{form.main_cat.label_tag}} {{form.main_cat}} </p>
+    <p> {{form.draft.label_tag}} {{ form.draft }} </p>
+    <p> {{form.tags.label_tag}} {{ form.tags }} </p>
+    <input name='button' type='submit' value='Publish' />
+    <input name='button' type='submit' value='Save Draft' />
+    </form>
+
+    </div>
+    <div id='preview' class='editpane'>
+    <span>Preview </span>
         <div class='content'>
         <span class='title'> 
-        {{ intro.title }} 
+        {{ content.title }} 
         </span>
         <span class='content_body'>
-            {{ intro.get_html|safe }}
+            {{ content.get_html|safe }}
         </span>
         </div>
-    {% endif %}
-</div>
-<hr>
-<div id='entries'>
-    {% if entries %}
-        {% for entry in entries %}
-            <div class='content'>
-            <span class='title'>
-            <a href='{% url detail entry.main_cat entry.id %}'>
-            {{ entry.title }} 
-            </a></span>
-            <span class='content_body'>
-                {{ entry.get_html|safe }}
-            </span>
-            <span class='closer'>
-                Published {{ entry.pub_date }} by {{ entry.author.name }} to <strong> {{ entry.main_cat }} </strong>
-            </span>
-            </div>
-        {% endfor %}
-    {% else %}
-        <span>No content at this time</span>
-    {% endif %}
-</div>
-</div>
-
-
+    </div>
+    
 </div>
 
 </body>

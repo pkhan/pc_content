@@ -1,0 +1,13 @@
+.editpane {
+    float: left;
+    width: 50%;
+}
+#content_form input[type='text']{
+    width: 90%;
+}
+#content_form textarea {
+    width: 90%;
+}
+#content_form p {
+    margin-top: 0;
+}

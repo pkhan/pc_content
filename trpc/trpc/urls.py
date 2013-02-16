@@ -5,14 +5,15 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'contentmgr.views.home', { 'category' : '' }),
-    url(r'^view/(?P<content_id>\d+)/?$', 'contentmgr.views.detail', { 'category' : '' }),
-    url(r'^create/?(?P<intro>\w+)?/?$', 'contentmgr.views.create', { 'category' : ''}),
-    url(r'^edit/(?P<content_id>\d+)/?$', 'contentmgr.views.edit', { 'category' : '' }),
+    url(r'^$', 'contentmgr.views.home', { 'category' : 'home' }),
+    url(r'^view/(?P<content_id>\d+)/?$', 'contentmgr.views.detail', { 'category' : 'home' }),
+    url(r'^create/?(?P<intro>\w+)?/?$', 'contentmgr.views.create', { 'category' : 'home' }),
+    url(r'^edit/(?P<content_id>\d+)/?$', 'contentmgr.views.edit', { 'category' : 'home' }),
+    url(r'^update/(?P<content_id>\d+)/?$', 'contentmgr.views.update', name='update'),
     url(r'^(?P<category>\w*)/?$', 'contentmgr.views.home', name='home'),
-    url(r'^(?P<category>\w*)/?view/(?P<content_id>\d+)/?$', 'contentmgr.views.detail', name='detail'),
-    url(r'^(?P<category>\w*)/?create/?(?P<intro>\w+)?/?$', 'contentmgr.views.create', name='create'),
-    url(r'^(?P<category>\w*)/?edit/(?P<content_id>\d+)/?$', 'contentmgr.views.edit', name='edit')
+    url(r'^(?P<category>\w*)/view/(?P<content_id>\d+)/?$', 'contentmgr.views.detail', name='detail'),
+    url(r'^(?P<category>\w*)/create/?(?P<intro>\w+)?/?$', 'contentmgr.views.create', name='create'),
+    url(r'^(?P<category>\w*)/edit/(?P<content_id>\d+)/?$', 'contentmgr.views.edit', name='edit')
     # Examples:
     # url(r'^$', 'trpc.views.home', name='home'),
     # url(r'^trpc/', include('trpc.foo.urls')),
