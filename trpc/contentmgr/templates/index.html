@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>TRPC</title>
+<title>{% block title %}TRPC{% endblock %}</title>
 <link rel='stylesheet' href='{{ STATIC_URL }}css/trpc.css' type='text/css' />
 </head>
 <body>
-<a href='{% url edit 'home' 10 %}'>Click</a>
 <div id='header' class='container'>
 <span id='logo'>
 <a href='{% url home 'home' %}'>
@@ -13,28 +12,29 @@
 </a>
 <div id='navigation'>
     <ul class='nav'>
-    <li><a href='{% url home "blog" %}'>BLOG </a></li>
-    <li><a href='{% url home "portfolio" %}'>PORTFOLIO</a></li>
-    <li><a href='{% url home "about" %}'>ABOUT</a></li>
+    <li {% if category == 'blog' %} class='active' {% endif %}><a href='{% url home "blog" %}'>BLOG </a></li>
+    <li {% if category == 'portfolio' %} class='active' {% endif %}><a href='{% url home "portfolio" %}'>PORTFOLIO</a></li>
+    <li {% if category == 'about' %} class='active' {% endif %}><a href='{% url home "about" %}'>ABOUT</a></li>
     </ul>
 </div>
 </div>
 <div id='body' class='container'>
-<div id='side_bar' class='whiteborder'>
-<span class='side_heading'>Saved for Posterity</span>
-<ul id='posterity'>
-<li><a href=''>My first time on a horse</a></li>
-<li><a href=''>My second time on a horse</a></li>
-</ul>
-<span class='side_heading'>Frequent Tags</span>
-<ul id='tags'>
-    <li><a href=''>administrivia</a></li>
-    <li><a href=''>chicken</a></li>
-    <li><a href=''>django</a></li>
-    <li><a href=''>personal</a></li>
-</ul>
-</div>
+    <div id='side_bar' class='whiteborder'>
+    <span class='side_heading'>Saved for Posterity</span>
+    <ul id='posterity'>
+    <li><a href=''>My first time on a horse</a></li>
+    <li><a href=''>My second time on a horse</a></li>
+    </ul>
+    <span class='side_heading'>Frequent Tags</span>
+    <ul id='tags'>
+        <li><a href=''>administrivia</a></li>
+        <li><a href=''>chicken</a></li>
+        <li><a href=''>django</a></li>
+        <li><a href=''>personal</a></li>
+    </ul>
+    </div>
 <div id='main_body'>
+{% block main_body %}
 <div id='intro'>
     {% if intro %}
         <div class='content'>
@@ -60,14 +60,14 @@
                 {{ entry.get_html|safe }}
             </span>
             <span class='closer'>
-                Published {{ entry.pub_date }} by {{ entry.author.name }} to <strong> {{ entry.main_cat }} </strong>
+                Published {{ entry.pub_date }} by {{ entry.author.name }} to <strong> <a href='{% url home entry.main_cat %}'> {{ entry.main_cat }} </a> </strong>
             </span>
             </div>
         {% endfor %}
     {% endif %}
 </div>
 </div>
-
+{% endblock %}
 
 </div>
 

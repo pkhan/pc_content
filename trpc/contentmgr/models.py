@@ -1,10 +1,11 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User as n_User
 from markdown import markdown
 
 class Content(models.Model):
     title = models.CharField(max_length=200, default="")
-    author = models.ForeignKey('User')
+    author = models.ForeignKey(n_User, null=True, blank=True, default=1)
     pub_date = models.DateTimeField(null=True, blank=True)
     mod_date = models.DateTimeField(auto_now=True)
     draft = models.BooleanField(default=True)

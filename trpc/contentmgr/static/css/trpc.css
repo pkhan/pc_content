@@ -65,12 +65,26 @@ a:hover {
     display: block;
     padding: 5px;
 }
+#navigation ul.nav li.active {
+    background-color: white;
+    color:black;
+}
+#navigation ul.nav li.active a {
+    color: black;
+}
+#navigation ul.nav li.active:hover {
+    background-color: black;
+}
+#navigation ul.nav li.active:hover a {
+    color: white;
+}
 #side_bar {
     float: right;
     width: 35%;
     padding: 3px;
     margin-left: 5px;
     margin-bottom: 5px;
+    display: none;
 }
 #side_bar ul{
     list-style: none;
@@ -100,11 +114,16 @@ a:hover {
 .content {
     margin-bottom: 10px;
 }
+.content .content_body h1 {
+    font-size: 12pt;
+}
 .content .title {
     display: block;
     background-color: rgb(40,40,40);
+    font-size: 12pt;
 }
 .content .closer {
     font-style: italic;
     font-size: 10pt;
 }
+

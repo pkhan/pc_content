@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+
+{% block title %} {{ content.title }} {% endblock %}
+
+{% block main_body %}
+
+    <div class='content'>
+        <span class='title'> 
+        {{ content.title }} 
+        </span>
+        <span class='content_body'>
+            {{ content.get_html|safe }}
+        </span>
+        <span class='closer'>
+            Published {{ content.pub_date }} by {{ content.author.name }} to <strong> {{ content.main_cat }} </strong>
+        </span>
+    </div>
+
+{% endblock %}
