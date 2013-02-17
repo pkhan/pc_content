@@ -80,7 +80,7 @@
             {% endif %}
 
             <span class='closer'>
-                Published {{ entry.pub_date }} by {{ entry.author.name }} to <strong> <a href='{% url home entry.main_cat %}'> {{ entry.main_cat }} </a> </strong>
+                Published {{ entry.pub_date }} by {{ entry.author.first_name }} {{ entry.author.last_name}} to <strong> <a href='{% url home entry.main_cat %}'> {{ entry.main_cat }} </a> </strong>
             </span>
             </div>
         {% endfor %}
