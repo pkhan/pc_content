@@ -29,10 +29,16 @@ a:hover {
         width: 720px;
     }
 }
+@media only screen and (min-width: 940px) {
+    .container {
+        width: 900px;
+    }
+}
 .whiteborder {
     border-color: white;
     border-style: solid;
     border-width: 1px;
+
 }
 #logo a {
     color: rgb(200,200,200);
@@ -41,7 +47,9 @@ a:hover {
     color: white;
 }
 #logo {
+    display: block;
     font-size: 20pt;
+    margin-bottom: 10px;
 }
 #navigation {
     background-color: rgb(50,50,50);
@@ -84,7 +92,12 @@ a:hover {
     padding: 3px;
     margin-left: 5px;
     margin-bottom: 5px;
-    display: none;
+    background-color: black;
+    border-left: solid black 40px;
+    border-bottom: solid black 40px;
+}
+#side_int {
+    min-height: 200px;
 }
 #side_bar ul{
     list-style: none;
@@ -126,4 +139,22 @@ a:hover {
     font-style: italic;
     font-size: 10pt;
 }
-
+.edit_link {
+    display: block;
+    border: solid white 1px;
+    padding: 2px;
+    text-align: center;
+    width: 50px;
+    margin-bottom: 10px;
+}
+.edit_link a {
+    display: block;
+}
+.more {
+    display: block;
+    margin-bottom: 10px;
+}
+#intro {
+    border-bottom: solid white 1px;
+    margin-bottom: 10px;
+}

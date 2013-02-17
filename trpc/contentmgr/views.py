@@ -8,17 +8,22 @@ from django.contrib.auth import authenticate, login as r_login
 from django.contrib.auth.decorators import login_required
 
 def home(request, category):
-    print(request.user.first_name)
+    show_edit = request.user.is_authenticated()
     intro = None
     intros = CatIntro.objects.filter(draft=False).filter(main_cat=category).order_by('-pub_date')[0:1]
     if len(intros) > 0:
         intro = intros[0]
     entries = Entry.objects.all().order_by('-pub_date').filter(pub_date__lte=timezone.now()).filter(draft=False)
+    tags = []
     if category != 'home':
         entries = entries.filter(main_cat=category)
-    c = RequestContext(request, { 'entries' : entries,
+    highlights = entries.order_by('-highlight')[0:5]
+    c = RequestContext(request, { 'entries' : entries[0:10],
+        'highlights' : highlights,
+        'tags' : tags,
         'intro' : intro,
-        'category' : category } )
+        'category' : category,
+        'show_edit' : show_edit } )
     t = loader.get_template('index.html')
     output = t.render(c)
     return HttpResponse(output)
@@ -56,7 +61,7 @@ def create(request, category, intro=False):
     else:
         e = Entry()
 
-    e.author = User.objects.all()[0]
+    e.author = request.user
     e.main_cat = category
     e.save()
     
@@ -86,6 +91,11 @@ def login(request):
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         r_login(request, user)
+        redir = None
+        if 'next' in request.GET.keys():
+            redir = request.GET['next']
+        if redir:
+            return redirect(redir)
         return redirect('home', category='home')
     return HttpResponse( loader.get_template('login.html').render(RequestContext(request, {})) )
 

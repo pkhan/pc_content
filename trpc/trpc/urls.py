@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     url(r'^login$', 'contentmgr.views.login', name='login'),
     url(r'^(?P<category>\w*)/?$', 'contentmgr.views.home', name='home'),
     url(r'^(?P<category>\w*)/view/(?P<content_id>\d+)/?$', 'contentmgr.views.detail', name='detail'),
-    url(r'^(?P<category>\w*)/create/?(?P<intro>\w+)?/?$', 'contentmgr.views.create', name='create'),
+    url(r'^(?P<category>\w*)/create(?P<intro>/\w+)?/?$', 'contentmgr.views.create', name='create'),
     url(r'^(?P<category>\w*)/edit/(?P<content_id>\d+)/?$', 'contentmgr.views.edit', name='edit')
     # Examples:
     # url(r'^$', 'trpc.views.home', name='home'),

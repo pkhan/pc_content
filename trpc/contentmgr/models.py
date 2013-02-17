@@ -12,6 +12,7 @@ class Content(models.Model):
     main_cat = models.CharField(max_length=50, default="", blank=True)
     body = models.TextField(default="")
     tags = models.ManyToManyField('Tag', blank=True)
+    highlight = models.IntegerField(default=0)
 
     def publish(self):
         self.draft = False
@@ -20,6 +21,12 @@ class Content(models.Model):
 
     def get_html(self):
         return markdown(self.body)
+
+    def get_short_html(self):
+        tail = ''
+        if len(self.body) > 300:
+            tail = '...'
+        return markdown(self.body[0:300]+tail)
     
     def __unicode__(self):
         return self.title

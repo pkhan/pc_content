@@ -19,6 +19,7 @@
     <ul class='nav'>
     <li><a href='{% url home "blog" %}'>BLOG </a></li>
     <li><a href='{% url home "portfolio" %}'>PORTFOLIO</a></li>
+    <li><a href='{% url home "about" %}'>ABOUT</a></li>
     </ul>
 </div>
 </div>
@@ -30,6 +31,7 @@
     <p> {{form.body.label_tag}} {{ form.body }} </p>
     <p> {{form.main_cat.label_tag}} {{form.main_cat}} </p>
     <p> {{form.draft.label_tag}} {{ form.draft }} </p>
+    <p> {{form.highlight.label_tag}} {{ form.highlight }} </p>
     <p> {{form.tags.label_tag}} {{ form.tags }} </p>
     <input name='button' type='submit' value='Publish' />
     <input name='button' type='submit' value='Save Draft' />

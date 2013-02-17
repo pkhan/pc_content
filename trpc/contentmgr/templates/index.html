@@ -19,20 +19,28 @@
 </div>
 </div>
 <div id='body' class='container'>
-    <div id='side_bar' class='whiteborder'>
-    <span class='side_heading'>Saved for Posterity</span>
-    <ul id='posterity'>
-    <li><a href=''>My first time on a horse</a></li>
-    <li><a href=''>My second time on a horse</a></li>
-    </ul>
-    <span class='side_heading'>Frequent Tags</span>
-    <ul id='tags'>
-        <li><a href=''>administrivia</a></li>
-        <li><a href=''>chicken</a></li>
-        <li><a href=''>django</a></li>
-        <li><a href=''>personal</a></li>
-    </ul>
+{% if highlights or tags %}
+    <div id='side_bar'>
+        <div id='side_int' class='whiteborder'>
+        {% if highlights %}
+        <span class='side_heading'>Saved for Posterity</span>
+        <ul id='posterity'>
+        {% for highlight in highlights %}
+            <li><a href='{% url detail highlight.main_cat highlight.id %}'>{{ highlight.title }}</a></li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+        {% if tags %}
+        <span class='side_heading'>Frequent Tags</span>
+        <ul id='tags'>
+            {% for tag in tags %}
+            <li><a href='search?tags={{ tag.tag }}'>{{ tag.tag }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        </div>
     </div>
+{% endif %}
 <div id='main_body'>
 {% block main_body %}
 <div id='intro'>
@@ -44,11 +52,18 @@
         <span class='content_body'>
             {{ intro.get_html|safe }}
         </span>
+        {% if show_edit %}
+            <span class='edit_link'><a href='{% url edit category intro.id %}'>Edit </a></span>
+        {% endif %}
         </div>
+    {% elif show_edit %}
+        <span class='edit_link'><a href='{% url create category '/intro' %}'>Create</a></span>
     {% endif %}
 </div>
-<hr>
 <div id='entries'>
+    {% if show_edit %}
+        <span class='edit_link'><a href='{% url create category %}'>Create</a></span>
+    {% endif %}
     {% if entries %}
         {% for entry in entries %}
             <div class='content'>
@@ -57,8 +72,13 @@
             {{ entry.title }} 
             </a></span>
             <span class='content_body'>
-                {{ entry.get_html|safe }}
+                {{ entry.get_short_html|safe }}
             </span>
+            <span class='more'><a href='{% url detail entry.main_cat entry.id %}'>More</a></span>
+            {% if show_edit %}
+                <span class='edit_link'><a href='{% url edit entry.main_cat entry.id %}'>Edit</a></span>
+            {% endif %}
+
             <span class='closer'>
                 Published {{ entry.pub_date }} by {{ entry.author.name }} to <strong> <a href='{% url home entry.main_cat %}'> {{ entry.main_cat }} </a> </strong>
             </span>
