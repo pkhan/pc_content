@@ -12,7 +12,7 @@
             {{ content.get_html|safe }}
         </span>
         <span class='closer'>
-            Published {{ content.pub_date }} by {{ content.author.name }} to <strong> {{ content.main_cat }} </strong>
+            Published {{ content.pub_date }} by {{ content.author.first_name }} {{ content.author.last_name }} to <strong> {{ content.main_cat }} </strong>
         </span>
     </div>
 
