@@ -1,29 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>TRPC</title>
-<link rel='stylesheet' href='{{ STATIC_URL }}css/trpc.css' type='text/css' />
+{% extends 'index.html' %}
+{% block title %} Edit {% endblock %}
+{% block styles %}
+{{ block.super }}
 <link rel='stylesheet' href='{{ STATIC_URL }}css/edit.css' type='text/css' />
+{% endblock %}
 
-</head>
-<body>
+{% block scripts %}
+{{ block.super }}
 <script src='{{ STATIC_URL }}js/jquery.min.js' type='text/javascript'> </script>
 <script src='{{ STATIC_URL }}js/Markdown.Converter.js' type='text/javascript'> </script>
 <script src='{{ STATIC_URL }}js/edit.js' type='text/javascript'> </script>
-<div id='header' class='container'>
-<span id='logo'>
-<a href='{% url home "" %}'>
-<strong>T</strong>HE<strong>R</strong>EAL<strong>P</strong>AT<strong>C</strong>ONWAY</span>
-</a>
-<div id='navigation'>
-    <ul class='nav'>
-    <li><a href='{% url home "blog" %}'>BLOG </a></li>
-    <li><a href='{% url home "portfolio" %}'>PORTFOLIO</a></li>
-    <li><a href='{% url home "about" %}'>ABOUT</a></li>
-    </ul>
-</div>
-</div>
-<div id='body' class='container'>
+{% endblock %}
+
+{% block main_body %}
     <div id='form' class='editpane'>
     <form id='content_form' action='{% url update content.id %}' method='POST'>
     {% csrf_token %}
@@ -39,20 +28,21 @@
 
     </div>
     <div id='preview' class='editpane'>
-    <span>Preview </span>
+    <span>Preview
+        <span class='auto_scroll'>
+        <label for='auto_scroll'>Auto Scroll?</label>
+        <input type='checkbox' id='auto_scroll' checked='true' />
+        </span>
+    </span>
         <div class='content'>
         <span class='title'> 
         {{ content.title }} 
         </span>
+        <div class='content_ext'>
         <span class='content_body'>
             {{ content.get_html|safe }}
         </span>
         </div>
+        </div>
     </div>
-    
-</div>
-
-</body>
-</html>
-
-
+{% endblock %}

@@ -7,7 +7,23 @@
 }
 #content_form textarea {
     width: 90%;
+    height: 300px;
 }
 #content_form p {
     margin-top: 0;
+}
+#content_form label {
+    display: block;
+}
+.content_ext {
+    overflow: scroll;
+    height: 300px;
+}
+#preview .content_body {
+    display: block;
+    position: relative;
+}
+#preview .auto_scroll {
+    font-size: 10pt;
+    float: right;
 }
